@@ -1,0 +1,399 @@
+
+GccApplication7.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000230  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000002a4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000008  00800060  00800060  000002a4  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000002a4  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002d4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000000d8  00000000  00000000  00000310  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000a73  00000000  00000000  000003e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000715  00000000  00000000  00000e5b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000004bb  00000000  00000000  00001570  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000188  00000000  00000000  00001a2c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000004b5  00000000  00000000  00001bb4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000126  00000000  00000000  00002069  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000098  00000000  00000000  0000218f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 ed 00 	jmp	0x1da	; 0x1da <__vector_7>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a8 36       	cpi	r26, 0x68	; 104
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 c5 00 	call	0x18a	; 0x18a <main>
+  74:	0c 94 16 01 	jmp	0x22c	; 0x22c <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <DIO_voidSetPinDirection>:
+#include "DIO_register.h"
+#include <avr/io.h>
+
+// Set pin direction
+void DIO_voidSetPinDirection(u8 copy_u8PortId, u8 copy_u8PinId, u8 copy_u8PinDirection) {
+    switch (copy_u8PortId) {
+  7c:	81 30       	cpi	r24, 0x01	; 1
+  7e:	c1 f4       	brne	.+48     	; 0xb0 <DIO_voidSetPinDirection+0x34>
+        case DIO_PORTB:
+            if (copy_u8PinDirection == DIO_PIN_OUTPUT) {
+  80:	41 30       	cpi	r20, 0x01	; 1
+  82:	59 f4       	brne	.+22     	; 0x9a <DIO_voidSetPinDirection+0x1e>
+                SET_BIT(DDRB, copy_u8PinId);
+  84:	27 b3       	in	r18, 0x17	; 23
+  86:	81 e0       	ldi	r24, 0x01	; 1
+  88:	90 e0       	ldi	r25, 0x00	; 0
+  8a:	02 c0       	rjmp	.+4      	; 0x90 <DIO_voidSetPinDirection+0x14>
+  8c:	88 0f       	add	r24, r24
+  8e:	99 1f       	adc	r25, r25
+  90:	6a 95       	dec	r22
+  92:	e2 f7       	brpl	.-8      	; 0x8c <DIO_voidSetPinDirection+0x10>
+  94:	82 2b       	or	r24, r18
+  96:	87 bb       	out	0x17, r24	; 23
+  98:	08 95       	ret
+            } else {
+                CLR_BIT(DDRB, copy_u8PinId);
+  9a:	27 b3       	in	r18, 0x17	; 23
+  9c:	81 e0       	ldi	r24, 0x01	; 1
+  9e:	90 e0       	ldi	r25, 0x00	; 0
+  a0:	02 c0       	rjmp	.+4      	; 0xa6 <DIO_voidSetPinDirection+0x2a>
+  a2:	88 0f       	add	r24, r24
+  a4:	99 1f       	adc	r25, r25
+  a6:	6a 95       	dec	r22
+  a8:	e2 f7       	brpl	.-8      	; 0xa2 <DIO_voidSetPinDirection+0x26>
+  aa:	80 95       	com	r24
+  ac:	82 23       	and	r24, r18
+  ae:	87 bb       	out	0x17, r24	; 23
+  b0:	08 95       	ret
+
+000000b2 <DIO_voidTogglePinValue>:
+    }
+}
+
+// Toggle pin value
+void DIO_voidTogglePinValue(u8 copy_u8PortId, u8 copy_u8PinId) {
+    switch (copy_u8PortId) {
+  b2:	81 30       	cpi	r24, 0x01	; 1
+  b4:	51 f4       	brne	.+20     	; 0xca <DIO_voidTogglePinValue+0x18>
+        case DIO_PORTB:
+            TOG_BIT(PORTB, copy_u8PinId);
+  b6:	28 b3       	in	r18, 0x18	; 24
+  b8:	81 e0       	ldi	r24, 0x01	; 1
+  ba:	90 e0       	ldi	r25, 0x00	; 0
+  bc:	02 c0       	rjmp	.+4      	; 0xc2 <DIO_voidTogglePinValue+0x10>
+  be:	88 0f       	add	r24, r24
+  c0:	99 1f       	adc	r25, r25
+  c2:	6a 95       	dec	r22
+  c4:	e2 f7       	brpl	.-8      	; 0xbe <DIO_voidTogglePinValue+0xc>
+  c6:	82 27       	eor	r24, r18
+  c8:	88 bb       	out	0x18, r24	; 24
+  ca:	08 95       	ret
+
+000000cc <GI_voidEnable>:
+#include "GI_register.h"
+
+
+void GI_voidEnable(void)
+{
+	SET_BIT(SREG_REG, I);
+  cc:	8f b7       	in	r24, 0x3f	; 63
+  ce:	80 68       	ori	r24, 0x80	; 128
+  d0:	8f bf       	out	0x3f, r24	; 63
+  d2:	08 95       	ret
+
+000000d4 <scheduler_init>:
+void timer_interrupt_handler(void);   // Declare the function prototype here
+
+// Initialize the scheduler using Timer1
+void scheduler_init(void) {
+	// Initialize Timer1 for scheduling
+	TMR1_voidInit();
+  d4:	0e 94 d7 00 	call	0x1ae	; 0x1ae <TMR1_voidInit>
+	TMR1_voidSetCallBack(timer_interrupt_handler, TMR1_CTC_COMPARE_MATCH_A);
+  d8:	62 e0       	ldi	r22, 0x02	; 2
+  da:	85 e8       	ldi	r24, 0x85	; 133
+  dc:	90 e0       	ldi	r25, 0x00	; 0
+  de:	0e 94 e6 00 	call	0x1cc	; 0x1cc <TMR1_voidSetCallBack>
+	TMR1_voidStart();
+  e2:	0e 94 e5 00 	call	0x1ca	; 0x1ca <TMR1_voidStart>
+
+	// Enable global interrupts
+	GI_voidEnable();
+  e6:	0e 94 66 00 	call	0xcc	; 0xcc <GI_voidEnable>
+  ea:	08 95       	ret
+
+000000ec <task1>:
+	}
+}
+
+// Task 1: Toggle LED on PB0
+void task1(void) {
+	DIO_voidTogglePinValue(DIO_PORTB, DIO_PIN0);
+  ec:	60 e0       	ldi	r22, 0x00	; 0
+  ee:	81 e0       	ldi	r24, 0x01	; 1
+  f0:	0e 94 59 00 	call	0xb2	; 0xb2 <DIO_voidTogglePinValue>
+  f4:	08 95       	ret
+
+000000f6 <task2>:
+}
+
+// Task 2: Toggle LED on PB1
+void task2(void) {
+	DIO_voidTogglePinValue(DIO_PORTB, DIO_PIN1);
+  f6:	61 e0       	ldi	r22, 0x01	; 1
+  f8:	81 e0       	ldi	r24, 0x01	; 1
+  fa:	0e 94 59 00 	call	0xb2	; 0xb2 <DIO_voidTogglePinValue>
+  fe:	08 95       	ret
+
+00000100 <task3>:
+}
+
+// Task 3: Toggle LED on PB2
+void task3(void) {
+	DIO_voidTogglePinValue(DIO_PORTB, DIO_PIN2);
+ 100:	62 e0       	ldi	r22, 0x02	; 2
+ 102:	81 e0       	ldi	r24, 0x01	; 1
+ 104:	0e 94 59 00 	call	0xb2	; 0xb2 <DIO_voidTogglePinValue>
+ 108:	08 95       	ret
+
+0000010a <timer_interrupt_handler>:
+	GI_voidEnable();
+}
+
+// Timer interrupt handler (executed every 1ms)
+void timer_interrupt_handler(void) {
+	task1_timer++;
+ 10a:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <task1_timer>
+ 10e:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <task1_timer+0x1>
+ 112:	01 96       	adiw	r24, 0x01	; 1
+ 114:	90 93 65 00 	sts	0x0065, r25	; 0x800065 <task1_timer+0x1>
+ 118:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <task1_timer>
+	task2_timer++;
+ 11c:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <task2_timer>
+ 120:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <task2_timer+0x1>
+ 124:	01 96       	adiw	r24, 0x01	; 1
+ 126:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <task2_timer+0x1>
+ 12a:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <task2_timer>
+	task3_timer++;
+ 12e:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 132:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 136:	01 96       	adiw	r24, 0x01	; 1
+ 138:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 13c:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+
+	// Check and run task1 (High priority, 10ms period)
+	if (task1_timer >= TASK1_PERIOD) {
+ 140:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <task1_timer>
+ 144:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <task1_timer+0x1>
+ 148:	0a 97       	sbiw	r24, 0x0a	; 10
+ 14a:	30 f0       	brcs	.+12     	; 0x158 <timer_interrupt_handler+0x4e>
+		task1_timer = 0;
+ 14c:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <task1_timer+0x1>
+ 150:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <task1_timer>
+		task1();
+ 154:	0e 94 76 00 	call	0xec	; 0xec <task1>
+	}
+
+	// Check and run task2 (Medium priority, 20ms period)
+	if (task2_timer >= TASK2_PERIOD) {
+ 158:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <task2_timer>
+ 15c:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <task2_timer+0x1>
+ 160:	44 97       	sbiw	r24, 0x14	; 20
+ 162:	30 f0       	brcs	.+12     	; 0x170 <timer_interrupt_handler+0x66>
+		task2_timer = 0;
+ 164:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <task2_timer+0x1>
+ 168:	10 92 62 00 	sts	0x0062, r1	; 0x800062 <task2_timer>
+		task2();
+ 16c:	0e 94 7b 00 	call	0xf6	; 0xf6 <task2>
+	}
+
+	// Check and run task3 (Low priority, 50ms period)
+	if (task3_timer >= TASK3_PERIOD) {
+ 170:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 174:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 178:	c2 97       	sbiw	r24, 0x32	; 50
+ 17a:	30 f0       	brcs	.+12     	; 0x188 <timer_interrupt_handler+0x7e>
+		task3_timer = 0;
+ 17c:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 180:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+		task3();
+ 184:	0e 94 80 00 	call	0x100	; 0x100 <task3>
+ 188:	08 95       	ret
+
+0000018a <main>:
+	DIO_voidTogglePinValue(DIO_PORTB, DIO_PIN2);
+}
+
+int main(void) {
+	// Initialize DIO pins for LEDs
+	DIO_voidSetPinDirection(DIO_PORTB, DIO_PIN0, DIO_PIN_OUTPUT);
+ 18a:	41 e0       	ldi	r20, 0x01	; 1
+ 18c:	60 e0       	ldi	r22, 0x00	; 0
+ 18e:	81 e0       	ldi	r24, 0x01	; 1
+ 190:	0e 94 3e 00 	call	0x7c	; 0x7c <DIO_voidSetPinDirection>
+	DIO_voidSetPinDirection(DIO_PORTB, DIO_PIN1, DIO_PIN_OUTPUT);
+ 194:	41 e0       	ldi	r20, 0x01	; 1
+ 196:	61 e0       	ldi	r22, 0x01	; 1
+ 198:	81 e0       	ldi	r24, 0x01	; 1
+ 19a:	0e 94 3e 00 	call	0x7c	; 0x7c <DIO_voidSetPinDirection>
+	DIO_voidSetPinDirection(DIO_PORTB, DIO_PIN2, DIO_PIN_OUTPUT);
+ 19e:	41 e0       	ldi	r20, 0x01	; 1
+ 1a0:	62 e0       	ldi	r22, 0x02	; 2
+ 1a2:	81 e0       	ldi	r24, 0x01	; 1
+ 1a4:	0e 94 3e 00 	call	0x7c	; 0x7c <DIO_voidSetPinDirection>
+
+	// Initialize the scheduler (Timer1)
+	scheduler_init();
+ 1a8:	0e 94 6a 00 	call	0xd4	; 0xd4 <scheduler_init>
+ 1ac:	ff cf       	rjmp	.-2      	; 0x1ac <main+0x22>
+
+000001ae <TMR1_voidInit>:
+}
+
+// Stop the Timer1
+void TMR1_voidStop(void) {
+    // Clear the prescaler to stop the timer
+    TCCR1B &= ~((1 << CS11) | (1 << CS10));
+ 1ae:	8e b5       	in	r24, 0x2e	; 46
+ 1b0:	88 60       	ori	r24, 0x08	; 8
+ 1b2:	8e bd       	out	0x2e, r24	; 46
+ 1b4:	8e b5       	in	r24, 0x2e	; 46
+ 1b6:	83 60       	ori	r24, 0x03	; 3
+ 1b8:	8e bd       	out	0x2e, r24	; 46
+ 1ba:	89 ef       	ldi	r24, 0xF9	; 249
+ 1bc:	90 e0       	ldi	r25, 0x00	; 0
+ 1be:	9b bd       	out	0x2b, r25	; 43
+ 1c0:	8a bd       	out	0x2a, r24	; 42
+ 1c2:	89 b7       	in	r24, 0x39	; 57
+ 1c4:	80 61       	ori	r24, 0x10	; 16
+ 1c6:	89 bf       	out	0x39, r24	; 57
+ 1c8:	08 95       	ret
+
+000001ca <TMR1_voidStart>:
+ 1ca:	08 95       	ret
+
+000001cc <TMR1_voidSetCallBack>:
+}
+
+// Set callback for Timer1 interrupts
+void TMR1_voidSetCallBack(void(*copy_pFunAction)(void), u8 copy_u8InterruptSource) {
+    if (copy_u8InterruptSource == TMR1_CTC_COMPARE_MATCH_A) {
+ 1cc:	62 30       	cpi	r22, 0x02	; 2
+ 1ce:	21 f4       	brne	.+8      	; 0x1d8 <TMR1_voidSetCallBack+0xc>
+        TMR1_CTC_Callback = copy_pFunAction;
+ 1d0:	90 93 67 00 	sts	0x0067, r25	; 0x800067 <TMR1_CTC_Callback+0x1>
+ 1d4:	80 93 66 00 	sts	0x0066, r24	; 0x800066 <TMR1_CTC_Callback>
+ 1d8:	08 95       	ret
+
+000001da <__vector_7>:
+        TMR1_OVF_Callback = copy_pFunAction;
+    }
+}
+
+// ISR for Timer1 Compare Match A
+ISR(TIMER1_COMPA_vect) {
+ 1da:	1f 92       	push	r1
+ 1dc:	0f 92       	push	r0
+ 1de:	0f b6       	in	r0, 0x3f	; 63
+ 1e0:	0f 92       	push	r0
+ 1e2:	11 24       	eor	r1, r1
+ 1e4:	2f 93       	push	r18
+ 1e6:	3f 93       	push	r19
+ 1e8:	4f 93       	push	r20
+ 1ea:	5f 93       	push	r21
+ 1ec:	6f 93       	push	r22
+ 1ee:	7f 93       	push	r23
+ 1f0:	8f 93       	push	r24
+ 1f2:	9f 93       	push	r25
+ 1f4:	af 93       	push	r26
+ 1f6:	bf 93       	push	r27
+ 1f8:	ef 93       	push	r30
+ 1fa:	ff 93       	push	r31
+    if (TMR1_CTC_Callback != NULL) {
+ 1fc:	e0 91 66 00 	lds	r30, 0x0066	; 0x800066 <TMR1_CTC_Callback>
+ 200:	f0 91 67 00 	lds	r31, 0x0067	; 0x800067 <TMR1_CTC_Callback+0x1>
+ 204:	30 97       	sbiw	r30, 0x00	; 0
+ 206:	09 f0       	breq	.+2      	; 0x20a <__vector_7+0x30>
+        TMR1_CTC_Callback();
+ 208:	09 95       	icall
+    }
+}
+ 20a:	ff 91       	pop	r31
+ 20c:	ef 91       	pop	r30
+ 20e:	bf 91       	pop	r27
+ 210:	af 91       	pop	r26
+ 212:	9f 91       	pop	r25
+ 214:	8f 91       	pop	r24
+ 216:	7f 91       	pop	r23
+ 218:	6f 91       	pop	r22
+ 21a:	5f 91       	pop	r21
+ 21c:	4f 91       	pop	r20
+ 21e:	3f 91       	pop	r19
+ 220:	2f 91       	pop	r18
+ 222:	0f 90       	pop	r0
+ 224:	0f be       	out	0x3f, r0	; 63
+ 226:	0f 90       	pop	r0
+ 228:	1f 90       	pop	r1
+ 22a:	18 95       	reti
+
+0000022c <_exit>:
+ 22c:	f8 94       	cli
+
+0000022e <__stop_program>:
+ 22e:	ff cf       	rjmp	.-2      	; 0x22e <__stop_program>
